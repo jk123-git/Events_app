@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate; // For authorization
 
 class EventRegistrationApiController extends Controller
 {

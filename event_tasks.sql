@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2025 at 06:55 PM
+-- Generation Time: Jul 06, 2025 at 12:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `event_managements`
 --
+CREATE DATABASE IF NOT EXISTS `event_managements` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `event_managements`;
 
 -- --------------------------------------------------------
 
@@ -70,7 +72,8 @@ CREATE TABLE `events` (
 INSERT INTO `events` (`id`, `title`, `description`, `start_date`, `end_date`, `location`, `banner_image`, `created_at`, `updated_at`) VALUES
 (1, 'Navaratri Night Garbass', 'Learn about the history, usage and variations of Lorem Ipsum, the industry\'s standard dummy text for over 2000 years. Generate your own Lorem Ipsum with a dictionary of over 200 Latin words and a random sentence structure', '2025-07-10', '2025-07-18', 'ahmedabad', '/storage/events/ojhRak6UtYlSPM9HtRyuryhSQjlsJIE9x6wGyUrg.png', '2025-07-02 06:27:16', '2025-07-02 10:23:16'),
 (2, 'Holi', 'What it should not be: A regular folder icon without an arrow, and its \"Type\" just says \"File folder.\" If it\'s a regular folder, it means a symlink was not created, or a folder was manually created/copied in its place', '2025-07-17', '2025-07-25', 'gandhinagar', '/storage/events/z8U052kOqlqWep8EbHYpjGMjR6MQz3YwUq38kDra.png', '2025-07-02 06:41:36', '2025-07-02 10:23:30'),
-(3, 'Diwali', 'diwali celebration party', '2025-10-16', '2025-10-19', 'goa', '/storage/events/fWEl2M1GFncDzCYs7aZ8gDDPbXLHwb90E8wMOVFo.png', '2025-07-02 10:18:05', '2025-07-02 10:18:05');
+(3, 'Diwali', 'diwali celebration party', '2025-10-16', '2025-10-19', 'goa', '/storage/events/fWEl2M1GFncDzCYs7aZ8gDDPbXLHwb90E8wMOVFo.png', '2025-07-02 10:18:05', '2025-07-02 10:18:05'),
+(4, 'New Year Celebration', 'Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year  Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year Happy new year', '2025-07-10', '2025-07-11', 'gandhinagar', '/storage/events/tYymdWhKiIephwQzqe704cRpqXHW79Mp00yJ4gI3.jpg', '2025-07-05 21:30:55', '2025-07-05 21:30:55');
 
 -- --------------------------------------------------------
 
@@ -91,7 +94,7 @@ CREATE TABLE `event_user` (
 --
 
 INSERT INTO `event_user` (`id`, `event_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(2, 2, 3, NULL, NULL);
+(5, 1, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -166,7 +169,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '0001_01_01_000002_create_jobs_table', 1),
 (4, '2025_07_02_074649_add_role_to_users_table', 2),
 (5, '2025_07_02_111618_create_events_table', 3),
-(6, '2025_07_02_123440_create_event_user_table', 4);
+(6, '2025_07_02_123440_create_event_user_table', 4),
+(7, '2025_07_06_052451_create_personal_access_tokens_table', 5);
 
 -- --------------------------------------------------------
 
@@ -179,6 +183,32 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personal_access_tokens`
+--
+
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `personal_access_tokens`
+--
+
+INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
+(1, 'App\\Models\\User', 2, 'admin_api_token', '5f41ff6e291f821ae1bb34dcc13549a2d626da7a2e51aa3827680a5267c41c12', '[\"*\"]', NULL, NULL, '2025-07-06 00:01:26', '2025-07-06 00:01:26');
 
 -- --------------------------------------------------------
 
@@ -200,9 +230,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('ObVlhXkbCdzC8ciGOS6kvBA6xJybGGkBC0na1j47', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoibnkzcHBmTGQ1c1BHcFlFQlAzVzA4Vm9WY2FteVNmMEtVTndTOUpKbyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9ldmVudHMvMS9lZGl0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mjt9', 1751473398),
-('qgbHOWiXVyk6R3ohGiLFTV70zePKirFjq7zD4fkg', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiWE9waWxkcGRHVU5mNGFKajJEQ0VIamJUaUdtNDV2TTZzTFNzSm1naiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ldmVudHMiO31zOjM6InVybCI7YTowOnt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mzt9', 1751472373),
-('QvLqoignwaca1iDTKlnUThGjIyvdKq20m4RZnlHc', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiNkdCbndnR3AySGZXemxTdHZpQnFNNFFNZjVNZGxPUUJoS3dZcXpuNSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kYXNoYm9hcmQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToyO30=', 1751465022);
+('oSWo5nbcUb3jcUf1JfkQ3Cu8VeeYZdO32wKg86jE', 4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiNjNMekdMUlB2eGdFUHlzb0NqZXk5UGh5T3hvSXpHRHlhbEhya3Z6RCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9maWxlIjt9czozOiJ1cmwiO2E6MDp7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjQ7fQ==', 1751772896),
+('wmZa8ecSKowI1TcNhNajnsJcBTuGNlJU8M3Gj4by', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiN2l1dVVKQTZrOWIxenlwUU5BeTBub1JRb3FnMURRMlN6dHB2djFMZCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ldmVudHMiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO30=', 1751693206);
 
 -- --------------------------------------------------------
 
@@ -229,7 +258,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'janak', 'janak@gmail.com', 'user', NULL, '$2y$12$gkSG/zga/RK9nVBXsop54uJ1ER78GnF3KhdrYzok/ETZV.iqqKXlq', NULL, '2025-07-02 05:33:14', '2025-07-02 05:33:14'),
 (2, 'Admin', 'admin@example.com', 'admin', NULL, '$2y$12$IzzrtGQQZTzjsWmCNzZ82u/jLcQYHQIOmNd.1OetSgYMStrk1thMu', NULL, '2025-07-02 05:41:59', '2025-07-02 05:41:59'),
-(3, 'Test User', 'user@example.com', 'user', NULL, '$2y$12$kH314IsrkVZwE0PWELXjKuzm7Ss05YLpQGeBVddVS.4ohrrV/tNYS', NULL, '2025-07-02 05:41:59', '2025-07-02 05:41:59');
+(3, 'Test User', 'user@example.com', 'user', NULL, '$2y$12$kH314IsrkVZwE0PWELXjKuzm7Ss05YLpQGeBVddVS.4ohrrV/tNYS', NULL, '2025-07-02 05:41:59', '2025-07-02 05:41:59'),
+(4, 'example', 'example@example.com', 'user', NULL, '$2y$12$XBgH9mzlnUKOH05WSNlsJ./MqMAH/lYl4NSuYf31jQh0irlbiqa.S', NULL, '2025-07-05 22:04:27', '2025-07-05 22:04:27');
 
 --
 -- Indexes for dumped tables
@@ -294,6 +324,14 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
 -- Indexes for table `sessions`
 --
 ALTER TABLE `sessions`
@@ -316,13 +354,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `event_user`
 --
 ALTER TABLE `event_user`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -340,13 +378,19 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

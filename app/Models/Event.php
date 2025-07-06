@@ -27,6 +27,8 @@ class Event extends Model
         // By default, Laravel assumes the pivot table name 'event_user'
         // and foreign keys 'event_id' and 'user_id'.
         // If you named them differently, you would pass them as arguments here.
-        return $this->belongsToMany(User::class);
+        
+        // return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'event_user')->withTimestamps();
     }
 }
